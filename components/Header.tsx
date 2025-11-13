@@ -29,6 +29,12 @@ export default function Header() {
             >
               Collections
             </Link>
+            <Link 
+              href="/contact" 
+              className="hover:text-cream transition-colors font-medium"
+            >
+              Contact
+            </Link>
           </nav>
 
           <button className="md:hidden flex flex-col gap-1.5">
