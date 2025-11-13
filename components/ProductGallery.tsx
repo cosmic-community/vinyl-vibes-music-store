@@ -21,6 +21,11 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
 
   // Get the current image safely with fallback to first image
   const currentImage = images[selectedIndex] || images[0]
+  
+  // Type guard to ensure currentImage exists (it will, since images.length > 0)
+  if (!currentImage) {
+    return null
+  }
 
   return (
     <div className="space-y-4">
