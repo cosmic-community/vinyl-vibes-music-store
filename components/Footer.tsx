@@ -33,6 +33,11 @@ export default function Footer() {
                   Collections
                 </a>
               </li>
+              <li>
+                <a href="/contact" className="hover:text-white transition-colors">
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
 
