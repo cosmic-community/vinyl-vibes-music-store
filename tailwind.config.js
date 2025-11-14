@@ -1,28 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#8B2635',
-          dark: '#6B1D29',
-          light: '#A63344',
+          DEFAULT: '#8B4513',
+          dark: '#6B3410',
         },
         secondary: {
-          DEFAULT: '#4ecdc4',
-          dark: '#3db8b0',
+          DEFAULT: '#D2691E',
+          dark: '#B85C1A',
         },
-        cream: {
-          DEFAULT: '#F5F1E8',
-          dark: '#E8E1D3',
-        },
+        cream: '#FFF8DC',
+        'warm-gray': '#F5F5DC',
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+      },
+      keyframes: {
+        'slide-up': {
+          '0%': { transform: 'translateY(100%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },
+      animation: {
+        'slide-up': 'slide-up 0.3s ease-out',
       },
     },
   },

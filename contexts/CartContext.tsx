@@ -84,12 +84,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const total = newItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0)
       const itemCount = newItems.reduce((sum: number, item: CartItem) => sum + item.quantity, 0)
 
-      // Show success toast
-      if (wasUpdated) {
-        showToast(`Updated quantity for ${item.name}`, 'success')
-      } else {
-        showToast(`${item.name} added to cart!`, 'success')
-      }
+      // Show success toast with setTimeout to ensure it renders
+      setTimeout(() => {
+        if (wasUpdated) {
+          showToast(`Updated quantity for ${item.name}`, 'success')
+        } else {
+          showToast(`${item.name} added to cart!`, 'success')
+        }
+      }, 100)
 
       return { items: newItems, total, itemCount }
     })
@@ -141,8 +143,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       {/* Toast Notification - Fixed positioning and z-index */}
       {toast.visible && (
         <div 
-          className="fixed bottom-8 right-8 animate-slide-up pointer-events-none"
-          style={{ zIndex: 9999 }}
+          className="fixed bottom-8 right-8 z-[9999] pointer-events-none"
+          style={{ 
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            zIndex: 9999
+          }}
         >
           <div 
             className={`
@@ -150,6 +157,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               ${toast.type === 'success' ? 'bg-green-600 text-white' : ''}
               ${toast.type === 'error' ? 'bg-red-600 text-white' : ''}
               ${toast.type === 'info' ? 'bg-blue-600 text-white' : ''}
+              animate-slide-up
             `}
             style={{ boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)' }}
           >
