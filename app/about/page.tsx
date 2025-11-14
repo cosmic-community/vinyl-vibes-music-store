@@ -28,6 +28,16 @@ export default async function AboutPage() {
     )
   }
 
+  // Changed: Safely parse values array with proper type checking
+  const values = Array.isArray(aboutData.metadata.values) 
+    ? aboutData.metadata.values 
+    : [];
+
+  // Changed: Safely parse offerings array with proper type checking
+  const offerings = Array.isArray(aboutData.metadata.offerings) 
+    ? aboutData.metadata.offerings 
+    : [];
+
   return (
     <div className="py-16 bg-cream">
       <div className="container-custom max-w-6xl">
@@ -66,13 +76,13 @@ export default async function AboutPage() {
         </section>
 
         {/* Our Values */}
-        {aboutData.metadata.values && aboutData.metadata.values.length > 0 && (
+        {values.length > 0 && (
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
               What We Stand For
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              {aboutData.metadata.values.map((value, index) => (
+              {values.map((value, index) => (
                 <div key={index} className="bg-white p-8 rounded-lg shadow-lg text-center">
                   <div className="text-5xl mb-4">{value.icon}</div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
@@ -88,14 +98,14 @@ export default async function AboutPage() {
         )}
 
         {/* What We Offer */}
-        {aboutData.metadata.offerings && aboutData.metadata.offerings.length > 0 && (
+        {offerings.length > 0 && (
           <section className="mb-16">
             <div className="bg-white p-8 md:p-12 rounded-lg shadow-lg">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 What We Offer
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
-                {aboutData.metadata.offerings.map((offering, index) => (
+                {offerings.map((offering, index) => (
                   <div key={index} className="flex gap-4">
                     <div className="text-2xl flex-shrink-0">{offering.icon}</div>
                     <div>
