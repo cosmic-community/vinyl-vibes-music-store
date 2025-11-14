@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import { CartItem } from '@/types'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2024-12-18.acacia',
+  apiVersion: '2025-02-24.acacia', // Changed: Updated to match Stripe package version 17.5.0
 })
 
 export async function POST(request: NextRequest) {
