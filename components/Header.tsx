@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useCart } from '@/contexts/CartContext'
 
 export default function Header() {
+  const { cart } = useCart()
+
   return (
     <header className="bg-primary text-white shadow-lg sticky top-0 z-50">
       <div className="container-custom">
@@ -34,6 +39,19 @@ export default function Header() {
               className="hover:text-cream transition-colors font-medium"
             >
               Contact
+            </Link>
+            <Link 
+              href="/cart" 
+              className="hover:text-cream transition-colors font-medium relative"
+            >
+              <span className="flex items-center gap-2">
+                🛒 Cart
+                {cart.itemCount > 0 && (
+                  <span className="bg-cream text-primary rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+                    {cart.itemCount}
+                  </span>
+                )}
+              </span>
             </Link>
           </nav>
 
