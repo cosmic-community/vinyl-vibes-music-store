@@ -64,6 +64,23 @@ export interface CosmicResponse<T> {
   skip?: number;
 }
 
+// Cart types
+export interface CartItem {
+  productId: string;
+  slug: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+  sku?: string;
+}
+
+export interface Cart {
+  items: CartItem[];
+  total: number;
+  itemCount: number;
+}
+
 // Type guards
 export function isProduct(obj: CosmicObject): obj is Product {
   return obj.type === 'products';

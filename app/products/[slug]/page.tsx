@@ -1,25 +1,68 @@
 // app/products/[slug]/page.tsx
-import { getProductBySlug, getReviewsByProduct } from '@/lib/cosmic'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import { Product, Review } from '@/types'
 import ProductGallery from '@/components/ProductGallery'
 import ReviewsList from '@/components/ReviewsList'
-import { notFound } from 'next/navigation'
+import { useCart } from '@/contexts/CartContext'
 
-export const revalidate = 60
+export default function ProductPage() {
+  const params = useParams()
+  const slug = params.slug as string
+  const { addToCart } = useCart()
+  
+  const [product, setProduct] = useState<Product | null>(null)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loading, setLoading] = useState(true)
 
-interface ProductPageProps {
-  params: Promise<{ slug: string }>;
-}
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Fetch product
+        const productRes = await fetch(`/api/products/${slug}`)
+        if (!productRes.ok) {
+          setProduct(null)
+          return
+        }
+        const productData = await productRes.json()
+        setProduct(productData)
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params
-  const product = await getProductBySlug(slug) as Product | null
+        // Fetch reviews
+        if (productData?.id) {
+          const reviewsRes = await fetch(`/api/reviews?productId=${productData.id}`)
+          if (reviewsRes.ok) {
+            const reviewsData = await reviewsRes.json()
+            setReviews(reviewsData)
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error)
+        setProduct(null)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  if (!product) {
-    notFound()
+    fetchData()
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className="py-16 bg-cream min-h-screen flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
   }
 
-  const reviews = await getReviewsByProduct(product.id) as Review[]
+  if (!product) {
+    return (
+      <div className="py-16 bg-cream min-h-screen flex items-center justify-center">
+        <div className="text-xl">Product not found</div>
+      </div>
+    )
+  }
 
   // Calculate average rating
   const averageRating = reviews.length > 0
@@ -28,6 +71,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
         return sum + rating
       }, 0) / reviews.length
     : 0
+
+  const handleAddToCart = () => {
+    if (!product.metadata.in_stock) return
+
+    const imageUrl = product.metadata.product_images?.[0]?.imgix_url || product.thumbnail
+
+    addToCart({
+      productId: product.id,
+      slug: product.slug,
+      name: product.metadata.product_name,
+      price: product.metadata.price,
+      image: imageUrl,
+      sku: product.metadata.sku
+    })
+  }
 
   return (
     <div className="py-16 bg-cream min-h-screen">
@@ -105,6 +163,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             )}
 
             <button 
+              onClick={handleAddToCart}
               className="btn-primary w-full lg:w-auto"
               disabled={!product.metadata.in_stock}
             >

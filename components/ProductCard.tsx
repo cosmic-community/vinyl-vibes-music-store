@@ -1,13 +1,31 @@
+'use client'
+
 import { Product } from '@/types'
 import Link from 'next/link'
+import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart()
   const imageUrl = product.metadata.product_images?.[0]?.imgix_url || product.thumbnail
   const collectionName = product.metadata.collection?.title
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (!product.metadata.in_stock) return
+
+    addToCart({
+      productId: product.id,
+      slug: product.slug,
+      name: product.metadata.product_name,
+      price: product.metadata.price,
+      image: imageUrl,
+      sku: product.metadata.sku
+    })
+  }
 
   return (
     <Link href={`/products/${product.slug}`}>
@@ -43,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.metadata.product_name}
           </h3>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <span className="text-2xl font-bold text-primary">
               ${product.metadata.price.toFixed(2)}
             </span>
@@ -54,6 +72,14 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
+
+          <button
+            onClick={handleAddToCart}
+            disabled={!product.metadata.in_stock}
+            className="btn-primary w-full text-center"
+          >
+            {product.metadata.in_stock ? 'Add to Cart' : 'Out of Stock'}
+          </button>
         </div>
       </div>
     </Link>
