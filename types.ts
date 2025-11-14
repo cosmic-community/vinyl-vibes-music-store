@@ -36,17 +36,20 @@ export interface Collection {
   }
 }
 
+// Changed: Added missing properties for customer_name and verified_purchase
 export interface Review {
   id: string
   title: string
   slug: string
   metadata: {
     reviewer_name: string
+    customer_name: string // Changed: Added customer_name property
     review_text: string
     rating: {
       key: string
       value: string
     }
+    verified_purchase?: boolean // Changed: Added verified_purchase property
     product: {
       id: string
       title: string
@@ -63,6 +66,13 @@ export interface CartItem {
   quantity: number
   image: string
   sku: string
+}
+
+// Changed: Added Cart interface for shopping cart state
+export interface Cart {
+  items: CartItem[]
+  total: number
+  itemCount: number
 }
 
 // Changed: Added AboutPage interface for Cosmic-powered content

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { getAboutPage } from '@/lib/cosmic'
-import { AboutPage } from '@/types'
+import type { AboutPage } from '@/types' // Changed: Use type-only import to fix TS2865
 
 export const revalidate = 60
 

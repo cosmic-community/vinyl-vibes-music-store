@@ -12,7 +12,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h4 className="font-bold text-lg text-gray-900">
-            {review.metadata.customer_name}
+            {review.metadata.customer_name} {/* Changed: Now uses customer_name from updated interface */}
           </h4>
           <div className="flex items-center gap-2 mt-1">
             <div className="flex">
@@ -29,7 +29,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                 </svg>
               ))}
             </div>
-            {review.metadata.verified_purchase && (
+            {review.metadata.verified_purchase && ( {/* Changed: Now uses verified_purchase from updated interface */}
               <span className="text-sm text-green-600 font-medium">
                 ✓ Verified Purchase
               </span>

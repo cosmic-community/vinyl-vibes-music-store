@@ -39,12 +39,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [cart])
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
-    setCart(prevCart => {
-      const existingItem = prevCart.items.find(i => i.productId === item.productId)
+    setCart((prevCart: Cart) => { // Changed: Added explicit type
+      const existingItem = prevCart.items.find((i: CartItem) => i.productId === item.productId) // Changed: Added explicit type
       
       let newItems: CartItem[]
       if (existingItem) {
-        newItems = prevCart.items.map(i =>
+        newItems = prevCart.items.map((i: CartItem) => // Changed: Added explicit type
           i.productId === item.productId
             ? { ...i, quantity: i.quantity + 1 }
             : i
@@ -53,18 +53,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         newItems = [...prevCart.items, { ...item, quantity: 1 }]
       }
 
-      const total = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-      const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0)
+      const total = newItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0) // Changed: Added explicit types
+      const itemCount = newItems.reduce((sum: number, item: CartItem) => sum + item.quantity, 0) // Changed: Added explicit types
 
       return { items: newItems, total, itemCount }
     })
   }
 
   const removeFromCart = (productId: string) => {
-    setCart(prevCart => {
-      const newItems = prevCart.items.filter(item => item.productId !== productId)
-      const total = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-      const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0)
+    setCart((prevCart: Cart) => { // Changed: Added explicit type
+      const newItems = prevCart.items.filter((item: CartItem) => item.productId !== productId) // Changed: Added explicit type
+      const total = newItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0) // Changed: Added explicit types
+      const itemCount = newItems.reduce((sum: number, item: CartItem) => sum + item.quantity, 0) // Changed: Added explicit types
 
       return { items: newItems, total, itemCount }
     })
@@ -76,14 +76,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
-    setCart(prevCart => {
-      const newItems = prevCart.items.map(item =>
+    setCart((prevCart: Cart) => { // Changed: Added explicit type
+      const newItems = prevCart.items.map((item: CartItem) => // Changed: Added explicit type
         item.productId === productId
           ? { ...item, quantity }
           : item
       )
-      const total = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-      const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0)
+      const total = newItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0) // Changed: Added explicit types
+      const itemCount = newItems.reduce((sum: number, item: CartItem) => sum + item.quantity, 0) // Changed: Added explicit types
 
       return { items: newItems, total, itemCount }
     })

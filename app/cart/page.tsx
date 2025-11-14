@@ -3,6 +3,7 @@
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
 import { useState } from 'react'
+import { CartItem } from '@/types' // Changed: Added CartItem import for type safety
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useCart()
@@ -67,7 +68,7 @@ export default function CartPage() {
           {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
-              {cart.items.map((item) => (
+              {cart.items.map((item: CartItem) => ( // Changed: Added explicit type
                 <div key={item.productId} className="border-b last:border-b-0 p-6">
                   <div className="flex gap-6">
                     {/* Product Image */}
