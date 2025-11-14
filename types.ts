@@ -1,95 +1,98 @@
-// Base Cosmic object interface
-export interface CosmicObject {
-  id: string;
-  slug: string;
-  title: string;
-  content?: string;
-  metadata: Record<string, any>;
-  type: string;
-  created_at: string;
-  modified_at: string;
-  thumbnail?: string;
-}
-
-// Product interface
-export interface Product extends CosmicObject {
-  type: 'products';
+export interface Product {
+  id: string
+  title: string
+  slug: string
+  thumbnail: string
   metadata: {
-    product_name: string;
-    description?: string;
-    price: number;
+    product_name: string
+    price: number
+    description: string
+    sku: string
+    in_stock: boolean
+    collection?: {
+      id: string
+      title: string
+      slug: string
+    }
     product_images?: Array<{
-      url: string;
-      imgix_url: string;
-    }>;
-    collection?: Collection;
-    in_stock?: boolean;
-    sku?: string;
-  };
+      imgix_url: string
+      url: string
+    }>
+  }
 }
 
-// Collection interface
-export interface Collection extends CosmicObject {
-  type: 'collections';
+export interface Collection {
+  id: string
+  title: string
+  slug: string
+  thumbnail: string
   metadata: {
-    collection_name: string;
-    description?: string;
+    collection_name: string
+    description: string
     featured_image?: {
-      url: string;
-      imgix_url: string;
-    };
-  };
+      imgix_url: string
+      url: string
+    }
+  }
 }
 
-// Review interface
-export interface Review extends CosmicObject {
-  type: 'reviews';
+export interface Review {
+  id: string
+  title: string
+  slug: string
   metadata: {
-    customer_name: string;
+    reviewer_name: string
+    review_text: string
     rating: {
-      key: string;
-      value: string;
-    };
-    review_text?: string;
-    product?: Product;
-    verified_purchase?: boolean;
-  };
+      key: string
+      value: string
+    }
+    product: {
+      id: string
+      title: string
+      slug: string
+    }
+  }
 }
 
-// API response types
-export interface CosmicResponse<T> {
-  objects: T[];
-  total: number;
-  limit?: number;
-  skip?: number;
-}
-
-// Cart types
 export interface CartItem {
-  productId: string;
-  slug: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image?: string;
-  sku?: string;
+  productId: string
+  slug: string
+  name: string
+  price: number
+  quantity: number
+  image: string
+  sku: string
 }
 
-export interface Cart {
-  items: CartItem[];
-  total: number;
-  itemCount: number;
-}
-
-// Type guards
-export function isProduct(obj: CosmicObject): obj is Product {
-  return obj.type === 'products';
-}
-
-export function isCollection(obj: CosmicObject): obj is Collection {
-  return obj.type === 'collections';
-}
-
-export function isReview(obj: CosmicObject): obj is Review {
-  return obj.type === 'reviews';
+// Changed: Added AboutPage interface for Cosmic-powered content
+export interface AboutPage {
+  id: string
+  title: string
+  slug: string
+  thumbnail: string
+  metadata: {
+    hero_title: string
+    hero_subtitle: string
+    hero_image: {
+      imgix_url: string
+      url: string
+    }
+    story_title: string
+    story_content: string
+    values: Array<{
+      icon: string
+      title: string
+      description: string
+    }>
+    offerings: Array<{
+      icon: string
+      title: string
+      description: string
+    }>
+    visit_title: string
+    visit_description: string
+    store_address: string
+    store_hours: string
+  }
 }
