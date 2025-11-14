@@ -21,11 +21,18 @@ export default function CartPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to create checkout session')
       }
 
       const { url } = await response.json()
-      window.location.href = url
+      
+      // Redirect to Stripe Checkout
+      if (url) {
+        window.location.href = url
+      } else {
+        throw new Error('No checkout URL returned')
+      }
     } catch (error) {
       console.error('Checkout error:', error)
       alert('Failed to start checkout. Please try again.')
