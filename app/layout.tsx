@@ -1,45 +1,36 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CosmicBadge from "@/components/CosmicBadge";
-import { CartProvider } from "@/contexts/CartContext";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import CosmicBadge from '@/components/CosmicBadge'
+import { CartProvider } from '@/contexts/CartContext'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Vinyl Vibes - Classic Music Store",
-  description: "Discover rare vinyl records and classic music merchandise",
-};
+  title: 'Vinyl Vibes - Your Music Store',
+  description: 'Discover and purchase classic vinyl records and music merchandise',
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const bucketSlug = process.env.COSMIC_BUCKET_SLUG as string;
+}: {
+  children: React.ReactNode
+}) {
+  // Get bucket slug for the Cosmic badge
+  const bucketSlug = process.env.COSMIC_BUCKET_SLUG as string
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={inter.className}>
         <CartProvider>
           <Header />
-          {children}
+          <main>{children}</main>
           <Footer />
           <CosmicBadge bucketSlug={bucketSlug} />
         </CartProvider>
       </body>
     </html>
-  );
+  )
 }
