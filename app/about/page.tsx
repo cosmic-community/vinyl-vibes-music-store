@@ -45,8 +45,8 @@ export default async function AboutPage() {
         {aboutData.metadata.hero_image && (
           <div className="mb-16 rounded-lg overflow-hidden shadow-xl">
             <img 
-              src={`${aboutData.metadata.hero_image.imgix_url}?w=2000&h=800&fit=crop&auto=format,compress`}
-              alt="Vinyl Vibes store"
+              src={`${aboutData.metadata.hero_image.imgix_url}?w=2400&h=800&fit=crop&auto=format,compress`}
+              alt="Vinyl Vibes store interior"
               className="w-full h-[400px] object-cover"
             />
           </div>
