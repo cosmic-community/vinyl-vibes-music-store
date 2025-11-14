@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: #ff6b6b;
+    --primary-dark: #ee5a52;
+    --secondary: #4ecdc4;
+    --cream: #fef8f3;
+  }
+
   body {
-    @apply bg-cream text-gray-900 font-sans;
+    @apply bg-cream text-gray-900;
   }
 }
 
@@ -14,15 +21,15 @@
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+    @apply bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 inline-block text-center;
   }
 
   .btn-secondary {
-    @apply bg-cream-dark hover:bg-gray-200 text-gray-900 font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+    @apply bg-secondary hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 inline-block text-center;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden transition-shadow duration-200 hover:shadow-xl;
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden;
   }
 
   .star-filled {
@@ -35,6 +42,7 @@
 }
 
 @layer utilities {
+  /* Toast animation */
   @keyframes slide-up {
     from {
       transform: translateY(100%);
@@ -47,6 +55,6 @@
   }
 
   .animate-slide-up {
-    animation: slide-up 0.3s ease-out;
+    animation: slide-up 0.3s ease-out forwards;
   }
 }

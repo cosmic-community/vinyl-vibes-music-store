@@ -138,15 +138,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, showToast }}>
       {children}
       
-      {/* Toast Notification */}
+      {/* Toast Notification - Fixed positioning and z-index */}
       {toast.visible && (
-        <div className="fixed bottom-4 right-4 z-50 animate-slide-up">
-          <div className={`
-            px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px] max-w-md
-            ${toast.type === 'success' ? 'bg-green-600 text-white' : ''}
-            ${toast.type === 'error' ? 'bg-red-600 text-white' : ''}
-            ${toast.type === 'info' ? 'bg-blue-600 text-white' : ''}
-          `}>
+        <div 
+          className="fixed bottom-8 right-8 animate-slide-up pointer-events-none"
+          style={{ zIndex: 9999 }}
+        >
+          <div 
+            className={`
+              px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 min-w-[320px] max-w-md pointer-events-auto
+              ${toast.type === 'success' ? 'bg-green-600 text-white' : ''}
+              ${toast.type === 'error' ? 'bg-red-600 text-white' : ''}
+              ${toast.type === 'info' ? 'bg-blue-600 text-white' : ''}
+            `}
+            style={{ boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)' }}
+          >
             {toast.type === 'success' && (
               <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -162,10 +168,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             )}
-            <span className="font-medium">{toast.message}</span>
+            <span className="font-medium flex-1">{toast.message}</span>
             <button
               onClick={() => setToast(prev => ({ ...prev, visible: false }))}
-              className="ml-auto text-white hover:text-gray-200"
+              className="ml-2 text-white hover:text-gray-200 transition-colors flex-shrink-0"
               aria-label="Close notification"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
