@@ -7,61 +7,48 @@ export default function Header() {
   const { cart } = useCart()
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container-custom py-4">
-        <div className="flex items-center justify-between">
+    <header className="bg-primary text-white sticky top-0 z-50 shadow-lg">
+      <div className="container-custom">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-3xl">🎵</span>
-            <span className="text-2xl font-bold text-primary">Vinyl Vibes</span>
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="text-3xl">🎵</div>
+            <span className="text-2xl font-bold">Vinyl Vibes</span>
           </Link>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="nav-link">
-              Home
-            </Link>
-            <Link href="/products" className="nav-link">
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link href="/products" className="hover:text-secondary transition-colors">
               Products
             </Link>
-            <Link href="/collections" className="nav-link">
+            <Link href="/collections" className="hover:text-secondary transition-colors">
               Collections
             </Link>
-            <Link href="/contact" className="nav-link">
+            <Link href="/contact" className="hover:text-secondary transition-colors">
               Contact
             </Link>
-          </div>
-
-          {/* Cart Icon */}
-          <Link href="/cart" className="relative">
-            <div className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-              <span className="text-xl">🛒</span>
-              <span className="font-medium">Cart</span>
+            <Link 
+              href="/cart" 
+              className="relative hover:text-secondary transition-colors flex items-center gap-2"
+            >
+              <span>🛒</span>
+              <span>Cart</span>
               {cart.itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-accent text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-secondary text-primary font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cart.itemCount}
                 </span>
               )}
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </nav>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden flex items-center gap-4 mt-4">
-          <Link href="/" className="nav-link">
-            Home
-          </Link>
-          <Link href="/products" className="nav-link">
-            Products
-          </Link>
-          <Link href="/collections" className="nav-link">
-            Collections
-          </Link>
-          <Link href="/contact" className="nav-link">
-            Contact
-          </Link>
+          {/* Mobile Menu Button */}
+          <button className="md:hidden">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-      </nav>
+      </div>
     </header>
   )
 }

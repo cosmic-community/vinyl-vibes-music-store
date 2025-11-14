@@ -1,35 +1,45 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import CosmicBadge from '@/components/CosmicBadge'
-import { CartProvider } from '@/contexts/CartContext'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CosmicBadge from "@/components/CosmicBadge";
+import { CartProvider } from "@/contexts/CartContext";
 
-const inter = Inter({ subsets: ['latin'] })
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: 'Vinyl Vibes - Premium Music Store',
-  description: 'Discover rare vinyl records, classic albums, and music merchandise',
-}
+  title: "Vinyl Vibes - Classic Music Store",
+  description: "Discover rare vinyl records and classic music merchandise",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
-  const bucketSlug = process.env.COSMIC_BUCKET_SLUG as string
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const bucketSlug = process.env.COSMIC_BUCKET_SLUG as string;
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <CartProvider>
           <Header />
-          <main>{children}</main>
+          {children}
           <Footer />
           <CosmicBadge bucketSlug={bucketSlug} />
         </CartProvider>
       </body>
     </html>
-  )
+  );
 }
