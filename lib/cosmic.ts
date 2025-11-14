@@ -135,3 +135,23 @@ export async function getAllReviews() {
     throw new Error('Failed to fetch reviews');
   }
 }
+
+// About page fetching function
+export async function getAboutPage() {
+  try {
+    const response = await cosmic.objects
+      .findOne({ 
+        type: 'about-pages',
+        slug: 'about-us'
+      })
+      .props(['id', 'title', 'slug', 'metadata', 'thumbnail'])
+      .depth(1);
+    
+    return response.object;
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null;
+    }
+    throw new Error('Failed to fetch about page');
+  }
+}
